@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="template-proxy-v1">
+    <Basepaths>/put_proxy_path_here</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1480431681808</CreatedAt>
+    <CreatedBy>defaultUser</CreatedBy>
+    <Description>Proxy template with best practices built in.  Copy and customize.</Description>
+    <DisplayName>template-proxy-v1</DisplayName>
+    <LastModifiedAt>1480432087947</LastModifiedAt>
+    <LastModifiedBy>defaultUser</LastModifiedBy>
+    <Policies>
+        <Policy>AssignMessage.Set400ErrorVariables</Policy>
+        <Policy>AssignMessage.Set401ErrorVariables</Policy>
+        <Policy>AssignMessage.Set404ErrorVariables</Policy>
+        <Policy>AssignMessage.Set429ErrorVariables</Policy>
+        <Policy>AssignMessage.Set500ErrorVariables</Policy>
+        <Policy>AssignMessage.SetGetResourceTargetPath</Policy>
+        <Policy>AssignMessage.SetPostResourceTargetPath</Policy>
+        <Policy>Stats.RecordCustomAnalytics</Policy>
+        <Policy>ExtractVariable.CommonRequestHeaders</Policy>
+        <Policy>ExtractVariable.ExtractCustomAnalyticVariables</Policy>
+        <Policy>Javascript.DisplayTraceRequestVariables</Policy>
+        <Policy>Javascript.DisplayTraceResponseVariables</Policy>
+        <Policy>Javascript.SetTargetUrl</Policy>
+        <Policy>Javascript.ValidateRequestParameters</Policy>
+        <Policy>KeyValueMap.GetConfigSettings</Policy>
+        <Policy>OAuthV2.VerifyAccessToken</Policy>
+        <Policy>Quota.EnforceQuota</Policy>
+        <Policy>RaiseFault.DefaultDetailedErrorResponse</Policy>
+        <Policy>RaiseFault.DefaultErrorResponse</Policy>
+        <Policy>RaiseFault.RaiseEmptyFault</Policy>
+        <Policy>SpikeArrest.SpikeArrest</Policy>
+        <Policy>ThreatProtection.JSONThreatProtection</Policy>
+        <Policy>VerifyAPIKey.VerifyAPIKey</Policy>
+        <Policy>XMLToJSON.ConvertSoapResponseToJson</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://Javascript.DisplayTraceRequestVariables.js</Resource>
+        <Resource>jsc://Javascript.DisplayTraceResponseVariables.js</Resource>
+        <Resource>jsc://Javascript.SetTargetUrl.js</Resource>
+        <Resource>jsc://Javascript.ValidateRequestParameters.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>

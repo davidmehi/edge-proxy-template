@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.DefaultErrorResponse">
+    <DisplayName>RaiseFault.DefaultErrorResponse</DisplayName>
+    <FaultResponse>
+        <Set>
+            <Headers>
+                <Header name="Content-Type">application/json</Header>
+            </Headers>
+            <Payload contentType="application/json" variablePrefix="@" variableSuffix="#">
+{
+	"errorResponse": {
+		"code": "@flow.error.code#",
+		"message": "@flow.error.message#",
+		"info": "@flow.error.info#"
+	}
+}
+			</Payload>
+            <StatusCode>{flow.error.status}</StatusCode>
+            <ReasonPhrase>{flow.error.reason}</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

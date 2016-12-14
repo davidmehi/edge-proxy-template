@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>SpikeArrest.SpikeArrest</Name>
+            </Step>
+            <Step>
+                <Name>VerifyAPIKey.VerifyAPIKey</Name>
+            </Step>
+            <Step>
+                <Name>OAuthV2.VerifyAccessToken</Name>
+            </Step>
+            <Step>
+                <Name>Quota.EnforceQuota</Name>
+            </Step>
+            <Step>
+                <Name>ExtractVariables.CommonRequestHeaders</Name>
+            </Step>
+            <Step>
+                <Name>ExtractVariables.ExtractCustomAnalyticVariables</Name>
+            </Step>
+            <Step>
+                <Name>KeyValueMap.GetConfigSettings</Name>
+            </Step>
+            <Step>
+                <Name>Stats.RecordCustomAnalytics</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request>
+            <Step>
+                <Name>Javascript.DisplayTraceRequestVariables</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>Javascript.DisplayTraceResponseVariables</Name>
+            </Step>
+        </Response>
+    </PostFlow>
+    <FaultRules>
+        <FaultRule name="Threat Protection">
+            <Condition>
+                (fault.name = "ExceededContainerDepth") or 
+                (fault.name = "ExceededObjectEntryCount") or 
+                (fault.name = "ExceededArrayElementCount") or 
+                (fault.name = "ExceededObjectEntryNameLength") or 
+                (fault.name = "ExceededStringValueLength") or 
+                (fault.name = "SourceUnavailable") or 
+                (fault.name = "NonMessageVariable") or 
+                (fault.name = "ExecutionFailed")
+            </Condition>
+            <Step>
+                <Name>AssignMessage.Set400ErrorVariables</Name>
+            </Step>
+        </FaultRule>
+        <FaultRule name="Invalid Api Key">
+            <Condition>
+                (fault.name = "ApiKeyNotApproved") or 
+                (fault.name = "CompanyStatusNotActive") or 
+                (fault.name = "DeveloperStatusNotActive") or 
+                (fault.name = "FailedToResolveAPIKey") or 
+                (fault.name = "InvalidApiKey") or 
+                (fault.name = "InvalidApiKeyForGivenResource") or 
+                (fault.name = "app_not_approved")
+            </Condition>
+            <Step>
+                <Name>AssignMessage.Set401ErrorVariables</Name>
+            </Step>
+        </FaultRule>
+        <FaultRule name="Invalid Access Token">
+            <Condition>
+                (fault.name = "FailedToResolveAccessToken") or 
+                (fault.name = "FailedToResolveToken") or 
+                (fault.name = "FailedToResolveAuthorizationCode") or 
+                (fault.name = "InsufficientScope") or 
+                (fault.name = "InvalidOperation")
+            </Condition>
+            <Step>
+                <Name>AssignMessage.Set401ErrorVariables</Name>
+            </Step>
+        </FaultRule>
+        <FaultRule name="Spike Arrest Fault">
+            <Condition>
+                (fault.name = "SpikeArrestViolation") or 
+                (fault.name = "InvalidMessageWeight") or 
+                (fault.name = "ErrorLoadingProperties") or 
+                (fault.name = "InvalidAllowedRate") or 
+                (fault.name = "FailedToResolveSpikeArrestRate")
+            </Condition>
+            <Step>
+                <Name>AssignMessage.Set429ErrorVariables</Name>
+            </Step>
+        </FaultRule>
+        <FaultRule name="Quota Fault">
+            <Condition>
+                (fault.name = "QuotaViolation") or 
+                (fault.name = "InvalidMessageWeight") or 
+                (fault.name = "InvalidQuotaInterval") or 
+                (fault.name = "FailedToResolveQuota\IntervalReference") or 
+                (fault.name = "FailedToResolveQuota\IntervalTimeUnitReference") or 
+                (fault.name = "InvalidQuotaTimeUnit")
+            </Condition>
+            <Step>
+                <Name>AssignMessage.Set429ErrorVariables</Name>
+            </Step>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule name="all">
+        <AlwaysEnforce>true</AlwaysEnforce>
+        <Step>
+            <Condition>flow.error.code = null</Condition>
+            <Name>AssignMessage.Set500ErrorVariables</Name>
+        </Step>
+        <Step>
+            <Name>RaiseFault.DefaultErrorResponse</Name>
+        </Step>
+    </DefaultFaultRule>
+    <Flows>
+        <Flow name="getResource">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>Javascript.ValidateRequestParameters</Name>
+                </Step>
+                <Step>
+                    <Name>AssignMessage.SetGetResourceTargetPath</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/resource_path") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="postResource">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>Javascript.ValidateRequestParameters</Name>
+                </Step>
+                <Step>
+                    <Name>ThreatProtection.JSONThreatProtection</Name>
+                </Step>
+                <Step>
+                    <Name>AssignMessage.SetPostResourceTargetPath</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/resource_path") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="CatchAll">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>AssignMessage.Set404ErrorVariables</Name>
+                </Step>
+                <Step>
+                    <Name>RaiseFault.RaiseEmptyFault</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/**")</Condition>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/put_proxy_path_here</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>
