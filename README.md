@@ -20,7 +20,7 @@ Steps to customize:
 6. Set Target Server
   1. Define your Target Server using the Management UI or Management API.
   2. Reference the target server in the "Default Target Endpoint"
-    1. <Server name="TargetServerName"/>
+    1. &lt; Server name="TargetServerName" /&gt;
 7. Set Target Path
   1. Each resource path should define the target path.
   2. If the target path changes per environment, then use the KVM to store the target path
