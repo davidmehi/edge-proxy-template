@@ -1,7 +1,7 @@
 # edge-proxy-template
 Details an Apigee Edge proxy template incorporating best practices
 
-This template has best practices built into the proxy.  A developer can use this template as their starting point in creating a proxy.  Copy and customize.
+This template has best practices built into the proxy.  A developer can use this template as their starting point in creating a proxy.  Save as a new proxy and customize.
 
 Steps to customize:
 
