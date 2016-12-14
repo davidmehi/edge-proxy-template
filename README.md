@@ -6,8 +6,8 @@ This template has best practices built into the proxy.  A developer can use this
 Steps to customize:
 
 1. Enforce API Key or AccessToken Verification
-  a. Enable a secure API by either API or Access token
-  b. Be sure to add one of these in the preflow
+  1. Enable a secure API by either API or Access token
+  2. Be sure to add one of these in the preflow
 2. Enforce Spike Arrest policy and the Quota policy
 3. Extract the necessary request headers, parameters, path parameters and/or payload data
   a. Reference the "ExtractVariables.CommonRequestHeaders" policy
