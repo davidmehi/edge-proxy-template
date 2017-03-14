@@ -18,6 +18,9 @@ The following are guidelines when developing a proxy.  They can also be used as 
 
 3. Implement common error handling
   1. See FaultRules/DefaultFaultRule
+  2. Add additional AssignMessage policies to support additional error codes
+  3. FaultRules allow you to customize the error code per error code.
+  4. See the policy's documentation for a list of error codes thrown by the policy
 
 4. Use a KVM for environment specific properties.  Proxy should not contain hardcoded urls, credentials or other properties.
 
