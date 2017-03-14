@@ -3,6 +3,8 @@
 
 The following are guidelines when developing a proxy.  They can also be used as a checklist to confirm best practice use.  See the Proxy Template example for implementation details.
 
+The proxy will not deploy as is.  Go through the list below to customize before deploying.
+
 
 1. Name the proxy based on a common proxy naming convention
   1. Example: {businessunit}-{api-purpose/function}-proxy-v1
