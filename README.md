@@ -36,11 +36,9 @@ Steps to customize:
   * If you have added new policies or need to handle extra types of Faults, refer to the FaultRules and DefaultFaultRule flow in the default proxy endpoint
   * Edit the "FaultRules.DefaultErrorResponse" to change the format of the error response
 11. Leverage Custom Analytics if required
-  * Reference the "Stats.RecordCustomAnalytics"
-<<<<<<< HEAD
-=======
+  * Reference the "Stats.RecordCustomAnalytics" policy
+  * Add additional fields to track
+
 
 [Click here for other Proxy Development Guidelines](ProxyDevelopmentGuidelines.md)
->>>>>>> 98b289e4c6896ff163f6ad40a20b4f887a32a985
 
-[Click here for other Proxy Development Guidelines](ProxyDevelopmentGuidelines.md)
